@@ -2,6 +2,7 @@
 const kAppRole = 'client';
 
 /// Branding shown on the splash, onboarding and login screens.
-const kAppName = 'Buildora';
+const kAppName = 'Buildora Insight';
+const kBrandName = 'Buildora';
+const kAppSuffix = 'Insight'; // shown after the brand name in the logo
 const kAppTagline = 'Your build, every day';
-const kAppBadge = ''; // small label next to the wordmark

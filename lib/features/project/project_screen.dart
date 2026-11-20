@@ -46,7 +46,7 @@ class ProjectScreen extends ConsumerWidget {
                     ),
             ),
             Expanded(
-              child: AsyncBody(
+              child: AsyncBody(loading: Skeleton.detail(), 
                 value: detail,
                 onRetry: () => ref.invalidate(projectDetailProvider(projectId)),
                 data: (d) => RefreshIndicator(
@@ -77,7 +77,7 @@ class _Body extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 4, 20, 32),
       children: [
-        PhotoCarousel(photos: photos, height: 230, showArrows: photos.length > 1),
+        PhotoCarousel(photos: photos, height: 230, showArrows: photos.length > 1, heroTag: HeroTags.project(p.id)),
         const SizedBox(height: 20),
         Text(p.name, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
         if (p.location.isNotEmpty) ...[const SizedBox(height: 6), LocationText(p.location, size: 14)],

@@ -46,7 +46,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   const Spacer(),
                   const NotificationBell(),
                   const SizedBox(width: 8),
-                  GestureDetector(onTap: () => context.go('/profile'), child: Avatar(name: user?.name ?? '', size: 40, square: true)),
+                  Tappable(radius: 10, scale: 0.9, onTap: () => context.go('/profile'), child: Avatar(name: user?.name ?? '', size: 40, square: true)),
                 ],
               ),
               const SizedBox(height: 20),
@@ -75,7 +75,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(height: 16),
               projects.when(
                 skipLoadingOnRefresh: true,
-                loading: () => const LoadingView(),
+                loading: () => LoadingView(skeleton: Skeleton.projects(padding: EdgeInsets.zero)),
                 error: (e, _) => ErrorView(error: e, onRetry: () => ref.invalidate(projectsProvider)),
                 data: (all) {
                   if (all.isEmpty) {
@@ -159,7 +159,7 @@ class _JoinProjectScreenState extends ConsumerState<JoinProjectScreen> {
             const SizedBox(height: 4),
             const Text('Join your project', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500, letterSpacing: -0.6)),
             const SizedBox(height: 8),
-            const Text('Your contractor shares a 6-character code from their Buildora app.', style: AppText.muted),
+            const Text('Your contractor shares a 6-character code from the Buildora On-site app.', style: AppText.muted),
             const SizedBox(height: 32),
             TextField(
               controller: _code,

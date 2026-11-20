@@ -27,7 +27,7 @@ class _ContractorTabState extends ConsumerState<ContractorTab> {
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: AsyncBody(
+        child: AsyncBody(loading: Skeleton.profile(), 
           value: projects,
           onRetry: () => ref.invalidate(projectsProvider),
           data: (list) {
@@ -83,7 +83,7 @@ class ContractorView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final value = ref.watch(contractorProvider(engineerId));
-    return AsyncBody(
+    return AsyncBody(loading: Skeleton.profile(), 
       value: value,
       onRetry: () => ref.invalidate(contractorProvider(engineerId)),
       data: (c) {
@@ -121,6 +121,7 @@ class ContractorView extends ConsumerWidget {
               const SectionTitle('Projects with you'),
               for (final p in c.projectsWithYou)
                 InkWell(
+                  borderRadius: BorderRadius.circular(12),
                   onTap: () => context.push('/projects/${p.id}'),
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 4),
@@ -223,7 +224,7 @@ class CaseStudyScreen extends ConsumerWidget {
           children: [
             const PageHeader(title: 'Case study'),
             Expanded(
-              child: AsyncBody(
+              child: AsyncBody(loading: Skeleton.detail(), 
                 value: value,
                 onRetry: () => ref.invalidate(publicCaseStudyProvider((engineerId, projectId))),
                 data: (s) => CaseStudyBody(study: s),

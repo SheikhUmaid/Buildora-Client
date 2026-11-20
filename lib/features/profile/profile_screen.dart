@@ -14,7 +14,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authProvider).value;
-    if (user == null) return const Scaffold(body: LoadingView());
+    if (user == null) return Scaffold(body: LoadingView(skeleton: Skeleton.profile()));
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -40,7 +40,7 @@ class ProfileScreen extends ConsumerWidget {
               onTap: () => context.push('/notifications'),
               trailing: Switch(
                 value: user.notificationsEnabled,
-                onChanged: (v) => ref.read(authProvider.notifier).updateProfile({'notificationsEnabled': v}),
+                onChanged: withHaptic((v) => ref.read(authProvider.notifier).updateProfile({'notificationsEnabled': v})),
               ),
             ),
             ActionTile(icon: Icons.group_add_outlined, label: 'Join a project', onTap: () => context.push('/join')),

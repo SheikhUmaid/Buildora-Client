@@ -37,7 +37,7 @@ class _RequestsScreenState extends ConsumerState<RequestsScreen> {
             ChipFilterBar(options: const ['All', 'Open', 'Done'], selected: _tab, onSelected: (i) => setState(() => _tab = i)),
             const SizedBox(height: 8),
             Expanded(
-              child: AsyncBody(
+              child: AsyncBody(loading: Skeleton.requests(), 
                 value: value,
                 onRetry: () => ref.invalidate(requestsProvider(query)),
                 data: (res) {
@@ -113,7 +113,7 @@ class _RequestDetailScreenState extends ConsumerState<RequestDetailScreen> {
     final value = ref.watch(requestDetailProvider(widget.requestId));
     return Scaffold(
       body: SafeArea(
-        child: AsyncBody(
+        child: AsyncBody(loading: Skeleton.requests(count: 1), 
           value: value,
           onRetry: () => ref.invalidate(requestDetailProvider(widget.requestId)),
           data: (r) => Column(
@@ -147,7 +147,7 @@ class _RequestDetailScreenState extends ConsumerState<RequestDetailScreen> {
                             for (var i = 0; i < r.photos.length; i++)
                               Padding(
                                 padding: const EdgeInsets.only(right: 8),
-                                child: GestureDetector(onTap: () => openPhotoViewer(context, r.photos, i), child: SizedBox(width: 90, child: NetImage(r.photos[i], radius: 12))),
+                                child: PhotoThumb(photos: r.photos, index: i, scope: 'request-${r.id}', width: 90),
                               ),
                           ],
                         ),

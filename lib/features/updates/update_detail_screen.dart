@@ -21,7 +21,7 @@ class UpdateDetailScreen extends ConsumerWidget {
     final value = ref.watch(updateDetailProvider(updateId));
     return Scaffold(
       body: SafeArea(
-        child: AsyncBody(
+        child: AsyncBody(loading: Skeleton.detail(), 
           value: value,
           onRetry: () => ref.invalidate(updateDetailProvider(updateId)),
           data: (d) => _Content(detail: d),
@@ -75,7 +75,7 @@ class _Content extends ConsumerWidget {
           child: ListView(
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
             children: [
-              if (u.photos.isNotEmpty) ...[PhotoCarousel(photos: u.photos, height: 280), const SizedBox(height: 20)],
+              if (u.photos.isNotEmpty) ...[PhotoCarousel(photos: u.photos, height: 280, heroTag: HeroTags.update(u.id)), const SizedBox(height: 20)],
               UpdateNoteCard(update: u),
               if (u.approvedByMe) ...[
                 const SizedBox(height: 12),
@@ -328,7 +328,10 @@ class _ComposeRequestState extends ConsumerState<_ComposeRequest> {
                   Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: GestureDetector(
-                      onLongPress: () => setState(() => _photos = [..._photos]..remove(p)),
+                      onLongPress: () {
+                        Haptics.medium();
+                        setState(() => _photos = [..._photos]..remove(p));
+                      },
                       child: SizedBox(width: 72, child: AnyImage(p, radius: 12)),
                     ),
                   ),
@@ -343,7 +346,10 @@ class _ComposeRequestState extends ConsumerState<_ComposeRequest> {
         ],
         const SizedBox(height: 16),
         InkWell(
-          onTap: () => setState(() => _urgent = !_urgent),
+          onTap: () {
+            Haptics.light();
+            setState(() => _urgent = !_urgent);
+          },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Row(

@@ -103,7 +103,7 @@ class _UpdatesScreenState extends ConsumerState<UpdatesScreen> {
             ),
             const SizedBox(height: 12),
             Expanded(
-              child: AsyncBody(
+              child: AsyncBody(loading: Skeleton.updates(), 
                 value: feed,
                 onRetry: () => ref.invalidate(updatesFeedProvider(_feedQuery)),
                 data: (updates) {
